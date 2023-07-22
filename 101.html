@@ -1,45 +1,230 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Display Milk Production Data</title>
+  <title>Lab</title>
   <style>
-    /* ... Your CSS for styling ... */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    
+    label, input {
+      display: block;
+      margin-bottom: 10px;
+    }
+    
+    input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+    
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
   </style>
 </head>
 <body>
-  <h1>Milk Production Data</h1>
-
-  <table id="displayTable">
-    <tr>
-      <th>Date</th>
-      <th>Time</th>
-      <th>Place</th>
-      <th>Tanker</th>
-      <th>Quantity (liters)</th>
-    </tr>
-  </table>
-
+  <h1>Lab</h1>
+  
+  <form id="milkForm">
+    <table>
+      <tr>
+        <th>Factor</th>
+        <th>Value</th>
+        <th>Ideal Value</th>
+      </tr>
+      <tr>
+        <td>SNF (%)</td>
+        <td><input type="number" name="snf" step="0.01" min="0"></td>
+        <td>0.03</td>
+      </tr>
+      <tr>
+        <td>Tazza (%)</td>
+        <td><input type="number" name="tazza" step="0.01" min="0"></td>
+        <td>0.07</td>
+      </tr>
+      <tr>
+        <td>Fat (%)</td>
+        <td><input type="number" name="fat" step="0.01" min="0"></td>
+        <td>0.02</td>
+      </tr>
+      <tr>
+        <td>Acidity (%)</td>
+        <td><input type="number" name="acidity" step="0.01" min="0"></td>
+        <td>0.01</td>
+      </tr>
+      <tr>
+        <td>Alcohol (%)</td>
+        <td><input type="number" name="alcohol" step="0.01" min="0"></td>
+        <td>0.04</td>
+      </tr>
+      <tr>
+        <td>OT (%)</td>
+        <td><input type="number" name="ot" step="0.01" min="0"></td>
+        <td>0.02</td>
+      </tr>
+      <tr>
+        <td>MBRT (%)</td>
+        <td><input type="number" name="mbrt" step="0.01" min="0"></td>
+        <td>0.06</td>
+      </tr>
+      <tr>
+        <td>Adulteration (%)</td>
+        <td><input type="number" name="adulteration" step="0.01" min="0"></td>
+        <td>0.03</td>
+      </tr>
+      <tr>
+        <td>ADP (%)</td>
+        <td><input type="number" name="adp" step="0.01" min="0"></td>
+        <td>0.05</td>
+      </tr>
+      <tr>
+        <td>RCM (%)</td>
+        <td><input type="number" name="rcm" step="0.01" min="0"></td>
+        <td>0.06</td>
+      </tr>
+      <tr>
+        <td>Skim (%)</td>
+        <td><input type="number" name="skim" step="0.01" min="0"></td>
+        <td>0.08</td>
+      </tr>
+      <tr>
+        <td>Fat Percentage (%)</td>
+        <td><input type="number" name="fatPercentage" step="0.01" min="0"></td>
+        <td>0.04</td>
+      </tr>
+      <tr>
+        <td>SNF Percentage (%)</td>
+        <td><input type="number" name="snfPercentage" step="0.01" min="0"></td>
+        <td>0.03</td>
+      </tr>
+    </table>
+    
+    <br>
+    <input type="button" value="Submit" onclick="addEntry()">
+  </form>
+  
+  <br>
+  
+  <div id="results"></div>
+  
   <script>
-    // Retrieve the data from Local Storage and display it in the table
-    var entries = JSON.parse(localStorage.getItem("entries") || "[]");
-    var table = document.getElementById("displayTable");
-
-    for (var i = 0; i < entries.length; i++) {
-      var entry = entries[i];
-      var row = table.insertRow(-1);
-
-      var dateCell = row.insertCell(0);
-      var timeCell = row.insertCell(1);
-      var placeCell = row.insertCell(2);
-      var tankerCell = row.insertCell(3);
-      var quantityCell = row.insertCell(4);
-
-      dateCell.innerHTML = entry.date;
-      timeCell.innerHTML = entry.time;
-      placeCell.innerHTML = entry.place;
-      tankerCell.innerHTML = entry.tanker;
-      quantityCell.innerHTML = entry.quantity;
+    var entries = [];
+    
+    function addEntry() {
+      var form = document.getElementById("milkForm");
+      var formData = new FormData(form);
+      var entry = {};
+      
+      for (const [key, value] of formData.entries()) {
+        entry[key] = value;
+      }
+      
+      entries.push(entry);
+      displayTable();
+      resetForm();
     }
+    
+    function displayTable() {
+      var tableData = "<h2>All Entries:</h2><table>";
+      tableData += "<tr><th>Date</th>";
+      
+      for (var key in entries[0]) {
+        if (key !== "date") {
+          tableData += "<th>" + key.replace(/([A-Z])/g, ' $1').trim() + "</th>";
+        }
+      }
+      tableData += "</tr>";
+      
+      for (var i = 0; i < entries.length; i++) {
+        var entry = entries[i];
+        tableData += "<tr><td>" + entry.date + "</td>";
+        
+        for (var prop in entry) {
+          if (prop !== "date") {
+            tableData += "<td>" + entry[prop] + "</td>";
+          }
+        }
+        tableData += "</tr>";
+      }
+      
+      tableData += "</table>";
+      
+      document.getElementById("results").innerHTML = tableData;
+    }
+    
+    function resetForm() {
+      var form = document.getElementById("milkForm");
+      form.reset();
+    }
+    
+    function getCurrentDate() {
+      var currentDate = new Date();
+      return currentDate.toLocaleDateString();
+    }
+    
+    window.onload = function() {
+      var form = document.getElementById("milkForm");
+      form.addEventListener("submit", function(event) {
+        event.preventDefault();
+      });
+    };
+function displayTable() {
+  var selectedMilkType = document.getElementById("milkType").value;
+  var tableData = "<h2>All Entries:</h2><table>";
+  tableData += "<tr><th>Date</th>";
+
+  for (var key in entries[0]) {
+    if (key !== "date") {
+      tableData += "<th>" + key.replace(/([A-Z])/g, ' $1').trim() + "</th>";
+    }
+  }
+  tableData += "</tr>";
+
+  for (var i = 0; i < entries.length; i++) {
+    var entry = entries[i];
+    if (entry.milkType === selectedMilkType) {
+      tableData += "<tr><td>" + entry.date + "</td>";
+
+      for (var prop in entry) {
+        if (prop !== "date") {
+          tableData += "<td>" + entry[prop] + "</td>";
+        }
+      }
+      tableData += "</tr>";
+    }
+  }
+
+  tableData += "</table>";
+
+  document.getElementById("results").innerHTML = tableData;
+}
   </script>
+  
 </body>
 </html>
