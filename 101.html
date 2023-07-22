@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Display Milk Production Data</title>
+  <style>
+    /* ... Your CSS for styling ... */
+  </style>
+</head>
+<body>
+  <h1>Milk Production Data</h1>
+
+  <table id="displayTable">
+    <tr>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Place</th>
+      <th>Tanker</th>
+      <th>Quantity (liters)</th>
+    </tr>
+  </table>
+
+  <script>
+    // Retrieve the data from Local Storage and display it in the table
+    var entries = JSON.parse(localStorage.getItem("entries") || "[]");
+    var table = document.getElementById("displayTable");
+
+    for (var i = 0; i < entries.length; i++) {
+      var entry = entries[i];
+      var row = table.insertRow(-1);
+
+      var dateCell = row.insertCell(0);
+      var timeCell = row.insertCell(1);
+      var placeCell = row.insertCell(2);
+      var tankerCell = row.insertCell(3);
+      var quantityCell = row.insertCell(4);
+
+      dateCell.innerHTML = entry.date;
+      timeCell.innerHTML = entry.time;
+      placeCell.innerHTML = entry.place;
+      tankerCell.innerHTML = entry.tanker;
+      quantityCell.innerHTML = entry.quantity;
+    }
+  </script>
+</body>
+</html>
