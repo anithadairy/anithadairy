@@ -1,230 +1,185 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Lab</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    
-    form {
-      max-width: 400px;
-      margin: 0 auto;
-    }
-    
-    label, input {
-      display: block;
-      margin-bottom: 10px;
-    }
-    
-    input[type="submit"] {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    
-    input[type="submit"]:hover {
-      background-color: #45a049;
-    }
-    
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-top: 20px;
-    }
-    
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-    
-    th {
-      background-color: #4CAF50;
-      color: white;
-    }
-  </style>
+    <title>MilkLab Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 150px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-  <h1>Lab</h1>
-  
-  <form id="milkForm">
-    <table>
-      <tr>
-        <th>Factor</th>
-        <th>Value</th>
-        <th>Ideal Value</th>
-      </tr>
-      <tr>
-        <td>SNF (%)</td>
-        <td><input type="number" name="snf" step="0.01" min="0"></td>
-        <td>0.03</td>
-      </tr>
-      <tr>
-        <td>Gold (%)</td>
-        <td><input type="number" name="gold" step="0.01" min="0"></td>
-        <td>0.05</td>
-      </tr>
-      <tr>
-        <td>Fat (%)</td>
-        <td><input type="number" name="fat" step="0.01" min="0"></td>
-        <td>0.02</td>
-      </tr>
-      <tr>
-        <td>Acidity (%)</td>
-        <td><input type="number" name="acidity" step="0.01" min="0"></td>
-        <td>0.01</td>
-      </tr>
-      <tr>
-        <td>Alcohol (%)</td>
-        <td><input type="number" name="alcohol" step="0.01" min="0"></td>
-        <td>0.04</td>
-      </tr>
-      <tr>
-        <td>OT (%)</td>
-        <td><input type="number" name="ot" step="0.01" min="0"></td>
-        <td>0.02</td>
-      </tr>
-      <tr>
-        <td>MBRT (%)</td>
-        <td><input type="number" name="mbrt" step="0.01" min="0"></td>
-        <td>0.06</td>
-      </tr>
-      <tr>
-        <td>Adulteration (%)</td>
-        <td><input type="number" name="adulteration" step="0.01" min="0"></td>
-        <td>0.03</td>
-      </tr>
-      <tr>
-        <td>ADP (%)</td>
-        <td><input type="number" name="adp" step="0.01" min="0"></td>
-        <td>0.05</td>
-      </tr>
-      <tr>
-        <td>RCM (%)</td>
-        <td><input type="number" name="rcm" step="0.01" min="0"></td>
-        <td>0.06</td>
-      </tr>
-      <tr>
-        <td>Skim (%)</td>
-        <td><input type="number" name="skim" step="0.01" min="0"></td>
-        <td>0.08</td>
-      </tr>
-      <tr>
-        <td>Fat Percentage (%)</td>
-        <td><input type="number" name="fatPercentage" step="0.01" min="0"></td>
-        <td>0.04</td>
-      </tr>
-      <tr>
-        <td>SNF Percentage (%)</td>
-        <td><input type="number" name="snfPercentage" step="0.01" min="0"></td>
-        <td>0.03</td>
-      </tr>
+    <h1>MilkLab Operations</h1>
+
+    <form id="milkForm">
+        <label for="milkLiters">Enter the quantity of milk in liters:</label>
+        <input type="number" id="milkLiters" name="milkLiters" step="0.01" required>
+        <input type="submit" value="Calculate">
+    </form>
+
+    <h2>Results:</h2>
+    <table id="results">
+        <tr>
+            <th>Factor</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>SNF (%)</td>
+            <td id="snfResult">0</td>
+          
+        </tr>
+        <tr>
+            <td>Gold (%)</td>
+            <td id="goldResult">0</td>
+            
+        </tr>
+        <tr>
+            <td>Fat (%)</td>
+            <td id="fatResult">0</td>
+            
+        </tr>
+        <tr>
+            <td>Acidity (%)</td>
+            <td id="acidityResult">0</td>
+            
+        </tr>
+        <tr>
+            <td>Alcohol (%)</td>
+            <td id="alcoholResult">0</td>
+            
+        </tr>
+        <tr>
+            <td>OT (%)</td>
+            <td id="otResult">0</td>
+           
+        </tr>
+        <tr>
+            <td>MBRT (%)</td>
+            <td id="mbrtResult">0</td>
+            
+        </tr>
+        <tr>
+            <td>Adulteration (%)</td>
+            <td id="adulterationResult">0</td>
+           
+        </tr>
+        <tr>
+            <td>ADP (%)</td>
+            <td id="adpResult">0</td>
+            
+        </tr>
+        <tr>
+            <td>RCM (%)</td>
+            <td id="rcmResult">0</td>
+            
+        </tr>
+        <tr>
+            <td>Skim (%)</td>
+            <td id="skimResult">0</td>
+            
+        </tr>
     </table>
-    
-    <br>
-    <input type="button" value="Submit" onclick="addEntry()">
-  </form>
-  
-  <br>
-  
-  <div id="results"></div>
-  
-  <script>
-    var entries = [];
-    
-    function addEntry() {
-      var form = document.getElementById("milkForm");
-      var formData = new FormData(form);
-      var entry = {};
-      
-      for (const [key, value] of formData.entries()) {
-        entry[key] = value;
-      }
-      
-      entries.push(entry);
-      displayTable();
-      resetForm();
-    }
-    
-    function displayTable() {
-      var tableData = "<h2>All Entries:</h2><table>";
-      tableData += "<tr><th>Date</th>";
-      
-      for (var key in entries[0]) {
-        if (key !== "date") {
-          tableData += "<th>" + key.replace(/([A-Z])/g, ' $1').trim() + "</th>";
-        }
-      }
-      tableData += "</tr>";
-      
-      for (var i = 0; i < entries.length; i++) {
-        var entry = entries[i];
-        tableData += "<tr><td>" + entry.date + "</td>";
-        
-        for (var prop in entry) {
-          if (prop !== "date") {
-            tableData += "<td>" + entry[prop] + "</td>";
-          }
-        }
-        tableData += "</tr>";
-      }
-      
-      tableData += "</table>";
-      
-      document.getElementById("results").innerHTML = tableData;
-    }
-    
-    function resetForm() {
-      var form = document.getElementById("milkForm");
-      form.reset();
-    }
-    
-    function getCurrentDate() {
-      var currentDate = new Date();
-      return currentDate.toLocaleDateString();
-    }
-    
-    window.onload = function() {
-      var form = document.getElementById("milkForm");
-      form.addEventListener("submit", function(event) {
-        event.preventDefault();
-      });
-    };
-function displayTable() {
-  var selectedMilkType = document.getElementById("milkType").value;
-  var tableData = "<h2>All Entries:</h2><table>";
-  tableData += "<tr><th>Date</th>";
 
-  for (var key in entries[0]) {
-    if (key !== "date") {
-      tableData += "<th>" + key.replace(/([A-Z])/g, ' $1').trim() + "</th>";
-    }
-  }
-  tableData += "</tr>";
+    <script>
+        document.getElementById("milkForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const milkLiters = parseFloat(document.getElementById("milkLiters").value);
+            const resultsTable = document.getElementById("results");
 
-  for (var i = 0; i < entries.length; i++) {
-    var entry = entries[i];
-    if (entry.milkType === selectedMilkType) {
-      tableData += "<tr><td>" + entry.date + "</td>";
+            const lab = {
+                SNF: 0,
+                Gold: 0,
+                Fat: 0,
+                Acidity: 0,
+                Alcohol: 0,
+                OT: 0,
+                MBRT: 0,
+                Adulteration: 0,
+                ADP: 0,
+                RCM: 0,
+                Skim: 0
+            };
 
-      for (var prop in entry) {
-        if (prop !== "date") {
-          tableData += "<td>" + entry[prop] + "</td>";
-        }
-      }
-      tableData += "</tr>";
-    }
-  }
+            lab.SNF = milkLiters * 0.03;
+            lab.Gold = milkLiters * 0.05;
+            lab.Fat = milkLiters * 0.02;
+            lab.Acidity = milkLiters * 0.01;
+            lab.Alcohol = milkLiters * 0.04;
+            lab.OT = milkLiters * 0.02;
+            lab.MBRT = milkLiters * 0.06;
+            lab.Adulteration = milkLiters * 0.03;
+            lab.ADP = milkLiters * 0.05;
+            lab.RCM = milkLiters * 0.06;
+            lab.Skim = milkLiters * 0.08;
 
-  tableData += "</table>";
-
-  document.getElementById("results").innerHTML = tableData;
-}
-  </script>
-  
+            document.getElementById("snfResult").textContent = lab.SNF.toFixed(2);
+            document.getElementById("goldResult").textContent = lab.Gold.toFixed(2);
+            document.getElementById("fatResult").textContent = lab.Fat.toFixed(2);
+            document.getElementById("acidityResult").textContent = lab.Acidity.toFixed(2);
+            document.getElementById("alcoholResult").textContent = lab.Alcohol.toFixed(2);
+            document.getElementById("otResult").textContent = lab.OT.toFixed(2);
+            document.getElementById("mbrtResult").textContent = lab.MBRT.toFixed(2);
+            document.getElementById("adulterationResult").textContent = lab.Adulteration.toFixed(2);
+            document.getElementById("adpResult").textContent = lab.ADP.toFixed(2);
+            document.getElementById("rcmResult").textContent = lab.RCM.toFixed(2);
+            document.getElementById("skimResult").textContent = lab.Skim.toFixed(2);
+        });
+    </script>
 </body>
 </html>
